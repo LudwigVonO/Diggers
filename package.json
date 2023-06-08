@@ -1,0 +1,23 @@
+{
+  "name": "diggers",
+  "version": "1.0.0",
+  "description": "Media recommendation application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LudwigVonO/Diggers.git"
+  },
+  "author": "Louis Strauss",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LudwigVonO/Diggers/issues"
+  },
+  "homepage": "https://github.com/LudwigVonO/Diggers#readme",
+  "dependencies": {
+    "@graphile-contrib/pg-many-to-many": "^1.0.2",
+    "postgraphile": "^4.13.0"
+  }
+}
