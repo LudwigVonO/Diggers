@@ -1,21 +1,26 @@
 {
-  "name": "db",
+  "name": "server",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Diggers' App server",
+  "main": "src/index.js",
   "scripts": {
+    "createDB": "psql postgres -f DB/Schemas/schema.sql",
+    "insertDummyData": "psql postgres -f DB/Schemas/data.sql",
+    "start": " node src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Louis Strauss",
   "license": "ISC",
   "dependencies": {
     "@graphile-contrib/pg-many-to-many": "^1.0.2",
     "@koa/cors": "^4.0.0",
-    "fs": "^0.0.1-security",
     "koa": "^2.14.2",
     "koa-bodyparser": "^4.4.0",
-    "path": "^0.12.7",
-    "postgraphile": "^4.13.0",
-    "sequelize": "^6.32.0"
+    "pg": "^8.11.0",
+    "postgraphile": "^4.13.0"
+  },
+  "devDependencies": {
+    "dotenv": "^16.1.4",
+    "nodemin": "^1.0.1"
   }
 }

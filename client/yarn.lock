@@ -55,6 +55,13 @@
   dependencies:
     "@apollo/client" latest
 
+"@apollo/react-hoc@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@apollo/react-hoc/-/react-hoc-4.0.0.tgz#64b54d9adf558b9fdca1215e661736acad426e05"
+  integrity sha512-+DgmqWRLkdlFk5jq11xJdVzb014TiTvr0K+E9CL1ioJpr85d7XIVycUwcYqb2acjeMbDF0V7G8VGiAVgkSkZKA==
+  dependencies:
+    "@apollo/client" latest
+
 "@apollo/react-hooks@^4.0.0":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@apollo/react-hooks/-/react-hooks-4.0.0.tgz#7bf7b320c90d276f637d9a84b503e17b840dd4e6"
@@ -1395,7 +1402,7 @@
     "@graphql-codegen/plugin-helpers" "^5.0.0"
     tslib "~2.5.0"
 
-"@graphql-codegen/cli@^4.0.1":
+"@graphql-codegen/cli@4.0.1":
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/@graphql-codegen/cli/-/cli-4.0.1.tgz#2bd494d55aaef0dfe86eefe1fa42bff81f5147fe"
   integrity sha512-/H4imnGOl3hoPXLKmIiGUnXpmBmeIClSZie/YHDzD5N59cZlGGJlIOOrUlOTDpJx5JNU1MTQcRjyTToOYM5IfA==
@@ -10504,6 +10511,11 @@ typedarray-to-buffer@^3.1.5:
   integrity sha512-zdu8XMNEDepKKR+XYOXAVPtWui0ly0NtohUscw+UmaHiAWT8hrV1rr//H6V+0DvJ3OQ19S979M0laLfX8rm82Q==
   dependencies:
     is-typedarray "^1.0.0"
+
+typescript@^5.1.3:
+  version "5.1.3"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.1.3.tgz#8d84219244a6b40b6fb2b33cc1c062f715b9e826"
+  integrity sha512-XH627E9vkeqhlZFQuL+UsyAXEnibT0kWR2FWONlr4sTjvxyJYnyefgrkyECLzM5NenmKzRAy2rR/OlYLA1HkZw==
 
 ua-parser-js@^1.0.35:
   version "1.0.35"

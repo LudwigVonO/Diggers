@@ -1795,49 +1795,62 @@ export enum UsersOrderBy {
   PrimaryKeyDesc = 'PRIMARY_KEY_DESC'
 }
 
-export type GetUsersQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetFilmsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetUsersQuery = { __typename?: 'Query', allUsers?: { __typename?: 'UsersConnection', nodes: Array<{ __typename?: 'User', id: number, firstName: string, lastName?: string | null, email: string, password: string } | null> } | null };
+export type GetFilmsQuery = { __typename?: 'Query', allFilms?: { __typename?: 'FilmsConnection', nodes: Array<{ __typename?: 'Film', title: string, id: number, firstRecommendedAt?: any | null, links?: Array<string | null> | null, nodeId: string, overview?: string | null, posterLink?: string | null, recommendationsByMediaId: { __typename?: 'RecommendationsConnection', nodes: Array<{ __typename?: 'Recommendation', recommenderId: number, moodsByRefRecommendationsWMoodRecommendationIdAndMoodId: { __typename?: 'RecommendationMoodsByRefRecommendationsWMoodRecommendationIdAndMoodIdManyToManyConnection', nodes: Array<{ __typename?: 'Mood', name: string, description: string } | null> } } | null> } } | null> } | null };
 
 
-export const GetUsersDocument = gql`
-    query getUsers {
-  allUsers {
+export const GetFilmsDocument = gql`
+    query getFilms {
+  allFilms {
     nodes {
+      title
       id
-      firstName
-      lastName
-      email
-      password
+      firstRecommendedAt
+      links
+      nodeId
+      overview
+      posterLink
+      recommendationsByMediaId {
+        nodes {
+          recommenderId
+          moodsByRefRecommendationsWMoodRecommendationIdAndMoodId {
+            nodes {
+              name
+              description
+            }
+          }
+        }
+      }
     }
   }
 }
     `;
 
 /**
- * __useGetUsersQuery__
+ * __useGetFilmsQuery__
  *
- * To run a query within a React component, call `useGetUsersQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetUsersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetFilmsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetFilmsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetUsersQuery({
+ * const { data, loading, error } = useGetFilmsQuery({
  *   variables: {
  *   },
  * });
  */
-export function useGetUsersQuery(baseOptions?: Apollo.QueryHookOptions<GetUsersQuery, GetUsersQueryVariables>) {
+export function useGetFilmsQuery(baseOptions?: Apollo.QueryHookOptions<GetFilmsQuery, GetFilmsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetUsersQuery, GetUsersQueryVariables>(GetUsersDocument, options);
+        return Apollo.useQuery<GetFilmsQuery, GetFilmsQueryVariables>(GetFilmsDocument, options);
       }
-export function useGetUsersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUsersQuery, GetUsersQueryVariables>) {
+export function useGetFilmsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetFilmsQuery, GetFilmsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetUsersQuery, GetUsersQueryVariables>(GetUsersDocument, options);
+          return Apollo.useLazyQuery<GetFilmsQuery, GetFilmsQueryVariables>(GetFilmsDocument, options);
         }
-export type GetUsersQueryHookResult = ReturnType<typeof useGetUsersQuery>;
-export type GetUsersLazyQueryHookResult = ReturnType<typeof useGetUsersLazyQuery>;
-export type GetUsersQueryResult = Apollo.QueryResult<GetUsersQuery, GetUsersQueryVariables>;
+export type GetFilmsQueryHookResult = ReturnType<typeof useGetFilmsQuery>;
+export type GetFilmsLazyQueryHookResult = ReturnType<typeof useGetFilmsLazyQuery>;
+export type GetFilmsQueryResult = Apollo.QueryResult<GetFilmsQuery, GetFilmsQueryVariables>;
