@@ -1,19 +1,87 @@
-.App {
+:root{
+  /* SIZES */
+    --custom-size-navBarHeight : 80px;
+    --custom-size-appMargin : 40px;
+    --custom-size-font-small: 12px;
+    --custom-size-font-medium: 14px;
+    --custom-size-font-large: 18px;
+    --custom-size-font-extra-large: 24px;
+
+    /* COLORS */
+    --custom-color-button-text :  RGB(219, 219, 219);
+
+    @media (prefers-color-scheme: light) {
+      --custom-color-primary : RGB(219, 219, 219);
+      --custom-color-secondary : RGB(0, 0, 9);
+      --custom-color-accent : RGB(181, 3, 136);
+    }
+    
+    @media (prefers-color-scheme: dark) {
+      --custom-color-primary : RGB(0, 0, 9);
+      --custom-color-secondary : RGB(219, 219, 219);
+      --custom-color-accent : RGB(181, 3, 136);
+    }
+}
+
+
+#root {
+  height: 100vh;
   text-align: center;
+  display: grid;
+  grid-template-columns: [page-start] var(--custom-size-appMargin) [content-start] 1fr [content-end] var(--custom-size-appMargin) [page-end];
+  grid-template-rows: [navbar-start] var(--custom-size-navBarHeight) [navbar-end] auto [end-end];
+  background: var(--custom-color-primary);
+  color: var(--custom-color-secondary);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.App {
+  grid-column: page-start / page-end;
+  grid-row: navbar-start / end-end;
+  display: grid;
+  grid-template-columns: inherit;
+  grid-template-rows: inherit;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+#navbar {
+  grid-column: content-start / content-end;
+  grid-row : navbar-start / navbar-end;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
 }
 
-.App-header {
+#filters{
+  grid-column: content-start / content-end ;
+  grid-row-start: navbar-end;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  padding: 10px 0px;
+}
+
+button{
+  background-color: var(--custom-color-accent);
+  color: var(--custom-color-button-text);
+  padding: 10px 20px;
+  border : none;
+  border-radius: 10px;
+}
+
+#scrollableSection {
+  grid-column: content-start / content-end;
+  grid-row-start : navbar-end;
+}
+
+
+.accent {
+  color:var(--custom-color-accent);
+}
+
+.button-text {
+  color: var(--custom-color-button-text);
+}
+/* .App-header {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -22,17 +90,5 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
-}
+} */
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}

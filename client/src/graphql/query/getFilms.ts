@@ -5,20 +5,34 @@ export default gql`
     allFilms {
       nodes {
         title
-        id
-        firstRecommendedAt
-        links
-        nodeId
+        tmdbId
+        releaseDate
+        posterPath
         overview
-        posterLink
+        originalTitle
+        originalLanguage
+        nodeId
+        links
+        id
+        genreIds
+        firstRecommendedAt
+        usersByRecommendationMediaIdAndRecommenderId {
+          nodes {
+            firstName
+            lastName
+          }
+        }
         recommendationsByMediaId {
           nodes {
-            recommenderId
             moodsByRefRecommendationsWMoodRecommendationIdAndMoodId {
               nodes {
                 name
-                description
+                id
               }
+            }
+            userByRecommenderId {
+              firstName
+              lastName
             }
           }
         }

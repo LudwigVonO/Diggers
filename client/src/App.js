@@ -1,16 +1,19 @@
-import logo from './logo.svg';
 import './App.css';
-import Films from './Components/Films.tsx';
+import FilmsSection from './Components/FilmsSection.tsx';
 import client from './ApolloClient.ts';
 import { ApolloProvider } from '@apollo/react-hooks';
+import Navbar from './Components/Navbar.tsx';
+import Filters from './Components/Filters.tsx';
 
 function App() {
   return (
     <ApolloProvider client={client}>      
     <div className="App">
-      <header className="App-header">
-        <Films></Films>
-      </header>
+      <Navbar></Navbar>
+      <section id="scrollableSection">
+        <Filters></Filters>
+        <FilmsSection></FilmsSection>
+      </section>
     </div>
     </ApolloProvider>
   );

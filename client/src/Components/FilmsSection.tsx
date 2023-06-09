@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { useGetFilmsQuery, Film, Recommendation } from '../generated/graphql.tsx'
+import { 
+  useGetFilmsQuery,
+  Film,
+  Recommendation 
+} from '../generated/graphql.tsx'
 
-const Films: React.FC = () => {
+const FilmsSection: React.FC = () => {
   const [films, setfilms] = useState<Film[]>([] as Film[])
   const { data, error, loading } = useGetFilmsQuery()
 
@@ -32,4 +36,4 @@ const Films: React.FC = () => {
   )
 }
 
-export default Films
+export default FilmsSection;

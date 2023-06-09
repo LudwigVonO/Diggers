@@ -16,7 +16,9 @@ export type Scalars = {
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
   Cursor: { input: any; output: any; }
+  Date: { input: any; output: any; }
   Datetime: { input: any; output: any; }
+  JSON: { input: any; output: any; }
 };
 
 /** All input for the create `Film` mutation. */
@@ -428,20 +430,25 @@ export type Film = Node & {
   __typename?: 'Film';
   /** The time this film was first recommended. */
   firstRecommendedAt?: Maybe<Scalars['Datetime']['output']>;
+  genreIds: Array<Maybe<Scalars['Int']['output']>>;
   /** The primary unique identifier for the film. */
   id: Scalars['Int']['output'];
   /** The platform links for this film. */
-  links?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  links: Array<Maybe<Scalars['JSON']['output']>>;
   /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
   nodeId: Scalars['ID']['output'];
+  originalLanguage: Scalars['String']['output'];
+  originalTitle: Scalars['String']['output'];
   /** A short description of the film. */
   overview?: Maybe<Scalars['String']['output']>;
   /** The link to that film’s poster */
-  posterLink?: Maybe<Scalars['String']['output']>;
+  posterPath?: Maybe<Scalars['String']['output']>;
   /** Reads and enables pagination through a set of `Recommendation`. */
   recommendationsByMediaId: RecommendationsConnection;
+  releaseDate: Scalars['Date']['output'];
   /** The film’s title. */
   title: Scalars['String']['output'];
+  tmdbId: Scalars['Int']['output'];
   /** Reads and enables pagination through a set of `User`. */
   usersByRecommendationMediaIdAndRecommenderId: FilmUsersByRecommendationMediaIdAndRecommenderIdManyToManyConnection;
 };
@@ -474,48 +481,68 @@ export type FilmUsersByRecommendationMediaIdAndRecommenderIdArgs = {
 export type FilmCondition = {
   /** Checks for equality with the object’s `firstRecommendedAt` field. */
   firstRecommendedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `genreIds` field. */
+  genreIds?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
   /** Checks for equality with the object’s `id` field. */
   id?: InputMaybe<Scalars['Int']['input']>;
   /** Checks for equality with the object’s `links` field. */
-  links?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  links?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  /** Checks for equality with the object’s `originalLanguage` field. */
+  originalLanguage?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `originalTitle` field. */
+  originalTitle?: InputMaybe<Scalars['String']['input']>;
   /** Checks for equality with the object’s `overview` field. */
   overview?: InputMaybe<Scalars['String']['input']>;
-  /** Checks for equality with the object’s `posterLink` field. */
-  posterLink?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `posterPath` field. */
+  posterPath?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `releaseDate` field. */
+  releaseDate?: InputMaybe<Scalars['Date']['input']>;
   /** Checks for equality with the object’s `title` field. */
   title?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `tmdbId` field. */
+  tmdbId?: InputMaybe<Scalars['Int']['input']>;
 };
 
 /** An input for mutations affecting `Film` */
 export type FilmInput = {
   /** The time this film was first recommended. */
   firstRecommendedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  genreIds: Array<InputMaybe<Scalars['Int']['input']>>;
   /** The primary unique identifier for the film. */
   id?: InputMaybe<Scalars['Int']['input']>;
   /** The platform links for this film. */
-  links?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  links: Array<InputMaybe<Scalars['JSON']['input']>>;
+  originalLanguage: Scalars['String']['input'];
+  originalTitle: Scalars['String']['input'];
   /** A short description of the film. */
   overview?: InputMaybe<Scalars['String']['input']>;
   /** The link to that film’s poster */
-  posterLink?: InputMaybe<Scalars['String']['input']>;
+  posterPath?: InputMaybe<Scalars['String']['input']>;
+  releaseDate: Scalars['Date']['input'];
   /** The film’s title. */
   title: Scalars['String']['input'];
+  tmdbId: Scalars['Int']['input'];
 };
 
 /** Represents an update to a `Film`. Fields that are set will be updated. */
 export type FilmPatch = {
   /** The time this film was first recommended. */
   firstRecommendedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  genreIds?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
   /** The primary unique identifier for the film. */
   id?: InputMaybe<Scalars['Int']['input']>;
   /** The platform links for this film. */
-  links?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  links?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  originalLanguage?: InputMaybe<Scalars['String']['input']>;
+  originalTitle?: InputMaybe<Scalars['String']['input']>;
   /** A short description of the film. */
   overview?: InputMaybe<Scalars['String']['input']>;
   /** The link to that film’s poster */
-  posterLink?: InputMaybe<Scalars['String']['input']>;
+  posterPath?: InputMaybe<Scalars['String']['input']>;
+  releaseDate?: InputMaybe<Scalars['Date']['input']>;
   /** The film’s title. */
   title?: InputMaybe<Scalars['String']['input']>;
+  tmdbId?: InputMaybe<Scalars['Int']['input']>;
 };
 
 /** A connection to a list of `User` values, with data from `Recommendation`. */
@@ -580,19 +607,29 @@ export type FilmsEdge = {
 export enum FilmsOrderBy {
   FirstRecommendedAtAsc = 'FIRST_RECOMMENDED_AT_ASC',
   FirstRecommendedAtDesc = 'FIRST_RECOMMENDED_AT_DESC',
+  GenreIdsAsc = 'GENRE_IDS_ASC',
+  GenreIdsDesc = 'GENRE_IDS_DESC',
   IdAsc = 'ID_ASC',
   IdDesc = 'ID_DESC',
   LinksAsc = 'LINKS_ASC',
   LinksDesc = 'LINKS_DESC',
   Natural = 'NATURAL',
+  OriginalLanguageAsc = 'ORIGINAL_LANGUAGE_ASC',
+  OriginalLanguageDesc = 'ORIGINAL_LANGUAGE_DESC',
+  OriginalTitleAsc = 'ORIGINAL_TITLE_ASC',
+  OriginalTitleDesc = 'ORIGINAL_TITLE_DESC',
   OverviewAsc = 'OVERVIEW_ASC',
   OverviewDesc = 'OVERVIEW_DESC',
-  PosterLinkAsc = 'POSTER_LINK_ASC',
-  PosterLinkDesc = 'POSTER_LINK_DESC',
+  PosterPathAsc = 'POSTER_PATH_ASC',
+  PosterPathDesc = 'POSTER_PATH_DESC',
   PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
   PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  ReleaseDateAsc = 'RELEASE_DATE_ASC',
+  ReleaseDateDesc = 'RELEASE_DATE_DESC',
   TitleAsc = 'TITLE_ASC',
-  TitleDesc = 'TITLE_DESC'
+  TitleDesc = 'TITLE_DESC',
+  TmdbIdAsc = 'TMDB_ID_ASC',
+  TmdbIdDesc = 'TMDB_ID_DESC'
 }
 
 /** One of the recommendation moods */
@@ -1798,7 +1835,17 @@ export enum UsersOrderBy {
 export type GetFilmsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetFilmsQuery = { __typename?: 'Query', allFilms?: { __typename?: 'FilmsConnection', nodes: Array<{ __typename?: 'Film', title: string, id: number, firstRecommendedAt?: any | null, links?: Array<string | null> | null, nodeId: string, overview?: string | null, posterLink?: string | null, recommendationsByMediaId: { __typename?: 'RecommendationsConnection', nodes: Array<{ __typename?: 'Recommendation', recommenderId: number, moodsByRefRecommendationsWMoodRecommendationIdAndMoodId: { __typename?: 'RecommendationMoodsByRefRecommendationsWMoodRecommendationIdAndMoodIdManyToManyConnection', nodes: Array<{ __typename?: 'Mood', name: string, description: string } | null> } } | null> } } | null> } | null };
+export type GetFilmsQuery = { __typename?: 'Query', allFilms?: { __typename?: 'FilmsConnection', nodes: Array<{ __typename?: 'Film', title: string, tmdbId: number, releaseDate: any, posterPath?: string | null, overview?: string | null, originalTitle: string, originalLanguage: string, nodeId: string, links: Array<any | null>, id: number, genreIds: Array<number | null>, firstRecommendedAt?: any | null, usersByRecommendationMediaIdAndRecommenderId: { __typename?: 'FilmUsersByRecommendationMediaIdAndRecommenderIdManyToManyConnection', nodes: Array<{ __typename?: 'User', firstName: string, lastName?: string | null } | null> }, recommendationsByMediaId: { __typename?: 'RecommendationsConnection', nodes: Array<{ __typename?: 'Recommendation', moodsByRefRecommendationsWMoodRecommendationIdAndMoodId: { __typename?: 'RecommendationMoodsByRefRecommendationsWMoodRecommendationIdAndMoodIdManyToManyConnection', nodes: Array<{ __typename?: 'Mood', name: string, id: number } | null> }, userByRecommenderId?: { __typename?: 'User', firstName: string, lastName?: string | null } | null } | null> } } | null> } | null };
+
+export type FilmsByMoodQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FilmsByMoodQuery = { __typename?: 'Query', allMoods?: { __typename?: 'MoodsConnection', nodes: Array<{ __typename?: 'Mood', id: number, name: string, description: string, refRecommendationsWMoodsByMoodId: { __typename?: 'RefRecommendationsWMoodsConnection', nodes: Array<{ __typename?: 'RefRecommendationsWMood', recommendationByRecommendationId?: { __typename?: 'Recommendation', filmByMediaId?: { __typename?: 'Film', id: number, posterPath?: string | null, title: string } | null } | null } | null> } } | null> } | null };
+
+export type FilmsByRecommenderQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FilmsByRecommenderQuery = { __typename?: 'Query', allUsers?: { __typename?: 'UsersConnection', nodes: Array<{ __typename?: 'User', firstName: string, lastName?: string | null, filmsByRecommendationRecommenderIdAndMediaId: { __typename?: 'UserFilmsByRecommendationRecommenderIdAndMediaIdManyToManyConnection', nodes: Array<{ __typename?: 'Film', id: number, posterPath?: string | null, title: string } | null> } } | null> } | null };
 
 
 export const GetFilmsDocument = gql`
@@ -1806,20 +1853,34 @@ export const GetFilmsDocument = gql`
   allFilms {
     nodes {
       title
-      id
-      firstRecommendedAt
-      links
-      nodeId
+      tmdbId
+      releaseDate
+      posterPath
       overview
-      posterLink
+      originalTitle
+      originalLanguage
+      nodeId
+      links
+      id
+      genreIds
+      firstRecommendedAt
+      usersByRecommendationMediaIdAndRecommenderId {
+        nodes {
+          firstName
+          lastName
+        }
+      }
       recommendationsByMediaId {
         nodes {
-          recommenderId
           moodsByRefRecommendationsWMoodRecommendationIdAndMoodId {
             nodes {
               name
-              description
+              id
             }
+          }
+          userByRecommenderId {
+            firstName
+            lastName
           }
         }
       }
@@ -1854,3 +1915,96 @@ export function useGetFilmsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<G
 export type GetFilmsQueryHookResult = ReturnType<typeof useGetFilmsQuery>;
 export type GetFilmsLazyQueryHookResult = ReturnType<typeof useGetFilmsLazyQuery>;
 export type GetFilmsQueryResult = Apollo.QueryResult<GetFilmsQuery, GetFilmsQueryVariables>;
+export const FilmsByMoodDocument = gql`
+    query FilmsByMood {
+  allMoods {
+    nodes {
+      id
+      name
+      description
+      refRecommendationsWMoodsByMoodId {
+        nodes {
+          recommendationByRecommendationId {
+            filmByMediaId {
+              id
+              posterPath
+              title
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useFilmsByMoodQuery__
+ *
+ * To run a query within a React component, call `useFilmsByMoodQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFilmsByMoodQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFilmsByMoodQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useFilmsByMoodQuery(baseOptions?: Apollo.QueryHookOptions<FilmsByMoodQuery, FilmsByMoodQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FilmsByMoodQuery, FilmsByMoodQueryVariables>(FilmsByMoodDocument, options);
+      }
+export function useFilmsByMoodLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FilmsByMoodQuery, FilmsByMoodQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FilmsByMoodQuery, FilmsByMoodQueryVariables>(FilmsByMoodDocument, options);
+        }
+export type FilmsByMoodQueryHookResult = ReturnType<typeof useFilmsByMoodQuery>;
+export type FilmsByMoodLazyQueryHookResult = ReturnType<typeof useFilmsByMoodLazyQuery>;
+export type FilmsByMoodQueryResult = Apollo.QueryResult<FilmsByMoodQuery, FilmsByMoodQueryVariables>;
+export const FilmsByRecommenderDocument = gql`
+    query FilmsByRecommender {
+  allUsers {
+    nodes {
+      firstName
+      lastName
+      filmsByRecommendationRecommenderIdAndMediaId {
+        nodes {
+          id
+          posterPath
+          title
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useFilmsByRecommenderQuery__
+ *
+ * To run a query within a React component, call `useFilmsByRecommenderQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFilmsByRecommenderQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFilmsByRecommenderQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useFilmsByRecommenderQuery(baseOptions?: Apollo.QueryHookOptions<FilmsByRecommenderQuery, FilmsByRecommenderQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FilmsByRecommenderQuery, FilmsByRecommenderQueryVariables>(FilmsByRecommenderDocument, options);
+      }
+export function useFilmsByRecommenderLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FilmsByRecommenderQuery, FilmsByRecommenderQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FilmsByRecommenderQuery, FilmsByRecommenderQueryVariables>(FilmsByRecommenderDocument, options);
+        }
+export type FilmsByRecommenderQueryHookResult = ReturnType<typeof useFilmsByRecommenderQuery>;
+export type FilmsByRecommenderLazyQueryHookResult = ReturnType<typeof useFilmsByRecommenderLazyQuery>;
+export type FilmsByRecommenderQueryResult = Apollo.QueryResult<FilmsByRecommenderQuery, FilmsByRecommenderQueryVariables>;

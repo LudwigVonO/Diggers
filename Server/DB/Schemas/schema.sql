@@ -36,10 +36,15 @@ comment on column diggers_app.mood.created_at is 'The time this mood was created
 
 create table diggers_app.film (
   id               serial primary key,
+  tmdb_id          integer not null,
   title            text not null,
+  original_title   text not null,
+  original_language   text not null,
   overview         text,
-  poster_link      text,
-  links            text[],
+  poster_path      text,
+  genre_ids        integer[] not null,
+  links            json[] not null,
+  release_date     date not null,
   first_recommended_at       timestamp default now()
 );
 
@@ -47,7 +52,7 @@ comment on table diggers_app.film is 'A recommended film';
 comment on column diggers_app.film.id is 'The primary unique identifier for the film.';
 comment on column diggers_app.film.title is 'The film’s title.';
 comment on column diggers_app.film.overview is 'A short description of the film.';
-comment on column diggers_app.film.poster_link is 'The link to that film’s poster';
+comment on column diggers_app.film.poster_path is 'The link to that film’s poster';
 comment on column diggers_app.film.links is 'The platform links for this film.';
 comment on column diggers_app.film.first_recommended_at is 'The time this film was first recommended.';
 
