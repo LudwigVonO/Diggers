@@ -2,8 +2,9 @@ import React, {useState} from "react";
 import getMovies from "../Services/tmdb.api.service";
 import { OneSearchFilm, SearchResults } from "../Types/SearchResults";
 import SearchResultCard from "./SearchResultCard";
+import {Modal} from 'antd';
 
-const FilmSearchBar: React.FC = () => {
+const FilmSearchBar: React.FC = ({handlePickedMovie}) => {
   const [searchValue,setSearchValue] = useState('');
   const [searchResults,setSearchResults] = useState<null|SearchResults>(null);
 
@@ -18,7 +19,7 @@ const FilmSearchBar: React.FC = () => {
       { searchResults && searchResults.results &&
        <div id='SearchResultsList'>
          {searchResults.results.map((film: OneSearchFilm)=>{
-           return <SearchResultCard film={film} />
+           return <SearchResultCard film={film} handlePickedMovie={handlePickedMovie} />
          })} 
        </div>
       }

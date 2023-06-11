@@ -14,6 +14,7 @@ query FilmsByMood {
               id
               posterPath
               title
+              tmdbId
             }
           }
         }

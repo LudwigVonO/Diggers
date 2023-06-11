@@ -1,28 +1,11 @@
 import React, { useContext, useState } from "react";
 import { FiltersContext } from "../Context/FiltersContext.tsx";
 import DropDown from "./Dropdown.tsx";
+import { Button, Radio} from "antd";
 
 
 const Filters: React.FC = (): JSX.Element => {
   const filtersContext = useContext(FiltersContext);
-  /**
-   * Toggle the drop down menu
-   */
-  const toggleDropDown = () => {
-    filtersContext?.setShowDropDown(!filtersContext.showDropDown);
-  };
-
-  /**
-   * Hide the drop down menu if click occurs
-   * outside of the drop-down element.
-   *
-   * @param event  The mouse event
-   */
-  const dismissHandler = (event: React.FocusEvent<HTMLButtonElement>): void => {
-    if (event.currentTarget === event.target) {
-      filtersContext?.setShowDropDown(false);
-    }
-  };
 
   /**
    * Callback function to consume the
@@ -34,27 +17,18 @@ const Filters: React.FC = (): JSX.Element => {
     filtersContext?.setSelectDisplay(display);
   };
 
+
+  const handleDisplayChange = (e: RadioChangeEvent) => {
+    displaySelection(e.target.value);
+  };
+
   return (
     <section id="filters">
-      {/* <div className="announcement">
-        <div>
-          {selectDisplay
-            ? `Films are displayed by ${selectDisplay}`
-            : "Select your travel destination"}
-        </div>
-      </div> */}
-      <button
-        className={filtersContext?.showDropDown ? "active button-primary" : "button-primary"}
-        onClick={(): void => toggleDropDown()}
-        onBlur={(e: React.FocusEvent<HTMLButtonElement>): void =>
-          dismissHandler(e)
-        }
-      >
-        <div>{filtersContext?.selectDisplay ? "Display by " + filtersContext?.selectDisplay : "Choose display ..."} </div>
-        {filtersContext?.showDropDown && (
-          <DropDown displaySelection={displaySelection} />
-        )}
-      </button>
+      <Radio.Group value={filtersContext?.selectDisplay} onChange={handleDisplayChange}>
+        <Radio.Button value="Mood">Mood</Radio.Button>
+        <Radio.Button value="Recommender">Recommender</Radio.Button>
+        <Radio.Button value="Genre">Genre</Radio.Button>
+      </Radio.Group>
     </section>
   );
 };

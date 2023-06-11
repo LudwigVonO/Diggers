@@ -18,7 +18,7 @@ const MoodView: React.FC = () => {
         setRowData(cleanFilmsByMood(data.allMoods.nodes as Mood[]) as RowData[])
       }
     }
-    if (error) {
+    if (error) {  
       console.log(error)
     }
     if (loading) {

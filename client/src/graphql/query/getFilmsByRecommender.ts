@@ -12,6 +12,7 @@ query FilmsByRecommender {
           id
           posterPath
           title
+          tmdbId
         }
       }
     }

@@ -503,6 +503,18 @@ export type FilmCondition = {
   tmdbId?: InputMaybe<Scalars['Int']['input']>;
 };
 
+/** The fields on `film` to look up the row to connect. */
+export type FilmFilmPkeyConnect = {
+  /** The primary unique identifier for the film. */
+  id: Scalars['Int']['input'];
+};
+
+/** The fields on `film` to look up the row to delete. */
+export type FilmFilmPkeyDelete = {
+  /** The primary unique identifier for the film. */
+  id: Scalars['Int']['input'];
+};
+
 /** An input for mutations affecting `Film` */
 export type FilmInput = {
   /** The time this film was first recommended. */
@@ -518,10 +530,39 @@ export type FilmInput = {
   overview?: InputMaybe<Scalars['String']['input']>;
   /** The link to that film’s poster */
   posterPath?: InputMaybe<Scalars['String']['input']>;
+  recommendationsUsingId?: InputMaybe<RecommendationMediaIdFkeyInverseInput>;
   releaseDate: Scalars['Date']['input'];
   /** The film’s title. */
   title: Scalars['String']['input'];
   tmdbId: Scalars['Int']['input'];
+};
+
+/** The globally unique `ID` look up for the row to connect. */
+export type FilmNodeIdConnect = {
+  /** The globally unique `ID` which identifies a single `film` to be connected. */
+  nodeId: Scalars['ID']['input'];
+};
+
+/** The globally unique `ID` look up for the row to delete. */
+export type FilmNodeIdDelete = {
+  /** The globally unique `ID` which identifies a single `film` to be deleted. */
+  nodeId: Scalars['ID']['input'];
+};
+
+/** The globally unique `ID` look up for the row to update. */
+export type FilmOnRecommendationForRecommendationMediaIdFkeyNodeIdUpdate = {
+  /** The globally unique `ID` which identifies a single `recommendation` to be connected. */
+  nodeId: Scalars['ID']['input'];
+  /** An object where the defined keys will be set on the `recommendation` being updated. */
+  recommendationPatch: RecommendationPatch;
+};
+
+/** The fields on `film` to look up the row to update. */
+export type FilmOnRecommendationForRecommendationMediaIdFkeyUsingFilmPkeyUpdate = {
+  /** An object where the defined keys will be set on the `film` being updated. */
+  filmPatch: UpdateFilmOnRecommendationForRecommendationMediaIdFkeyPatch;
+  /** The primary unique identifier for the film. */
+  id: Scalars['Int']['input'];
 };
 
 /** Represents an update to a `Film`. Fields that are set will be updated. */
@@ -539,6 +580,7 @@ export type FilmPatch = {
   overview?: InputMaybe<Scalars['String']['input']>;
   /** The link to that film’s poster */
   posterPath?: InputMaybe<Scalars['String']['input']>;
+  recommendationsUsingId?: InputMaybe<RecommendationMediaIdFkeyInverseInput>;
   releaseDate?: InputMaybe<Scalars['Date']['input']>;
   /** The film’s title. */
   title?: InputMaybe<Scalars['String']['input']>;
@@ -697,6 +739,47 @@ export type MoodInput = {
   id?: InputMaybe<Scalars['Int']['input']>;
   /** The name given to the mood. */
   name: Scalars['String']['input'];
+  refRecommendationsWMoodsUsingId?: InputMaybe<RefRecommendationsWMoodsMoodIdFkeyInverseInput>;
+};
+
+/** The fields on `mood` to look up the row to connect. */
+export type MoodMoodPkeyConnect = {
+  /** The primary unique identifier for the mood. */
+  id: Scalars['Int']['input'];
+};
+
+/** The fields on `mood` to look up the row to delete. */
+export type MoodMoodPkeyDelete = {
+  /** The primary unique identifier for the mood. */
+  id: Scalars['Int']['input'];
+};
+
+/** The globally unique `ID` look up for the row to connect. */
+export type MoodNodeIdConnect = {
+  /** The globally unique `ID` which identifies a single `mood` to be connected. */
+  nodeId: Scalars['ID']['input'];
+};
+
+/** The globally unique `ID` look up for the row to delete. */
+export type MoodNodeIdDelete = {
+  /** The globally unique `ID` which identifies a single `mood` to be deleted. */
+  nodeId: Scalars['ID']['input'];
+};
+
+/** The globally unique `ID` look up for the row to update. */
+export type MoodOnRefRecommendationsWMoodForRefRecommendationsWMoodsMoodIdFkeyNodeIdUpdate = {
+  /** The globally unique `ID` which identifies a single `refRecommendationsWMood` to be connected. */
+  nodeId: Scalars['ID']['input'];
+  /** An object where the defined keys will be set on the `refRecommendationsWMood` being updated. */
+  refRecommendationsWMoodPatch: RefRecommendationsWMoodPatch;
+};
+
+/** The fields on `mood` to look up the row to update. */
+export type MoodOnRefRecommendationsWMoodForRefRecommendationsWMoodsMoodIdFkeyUsingMoodPkeyUpdate = {
+  /** The primary unique identifier for the mood. */
+  id: Scalars['Int']['input'];
+  /** An object where the defined keys will be set on the `mood` being updated. */
+  moodPatch: UpdateMoodOnRefRecommendationsWMoodForRefRecommendationsWMoodsMoodIdFkeyPatch;
 };
 
 /** Represents an update to a `Mood`. Fields that are set will be updated. */
@@ -709,6 +792,7 @@ export type MoodPatch = {
   id?: InputMaybe<Scalars['Int']['input']>;
   /** The name given to the mood. */
   name?: InputMaybe<Scalars['String']['input']>;
+  refRecommendationsWMoodsUsingId?: InputMaybe<RefRecommendationsWMoodsMoodIdFkeyInverseInput>;
 };
 
 /** A connection to a list of `Recommendation` values, with data from `RefRecommendationsWMood`. */
@@ -837,6 +921,16 @@ export type Mutation = {
   updateUser?: Maybe<UpdateUserPayload>;
   /** Updates a single `User` using a unique key and a patch. */
   updateUserById?: Maybe<UpdateUserPayload>;
+  /** Upserts a single `Film`. */
+  upsertFilm?: Maybe<UpsertFilmPayload>;
+  /** Upserts a single `Mood`. */
+  upsertMood?: Maybe<UpsertMoodPayload>;
+  /** Upserts a single `Recommendation`. */
+  upsertRecommendation?: Maybe<UpsertRecommendationPayload>;
+  /** Upserts a single `RefRecommendationsWMood`. */
+  upsertRefRecommendationsWMood?: Maybe<UpsertRefRecommendationsWMoodPayload>;
+  /** Upserts a single `User`. */
+  upsertUser?: Maybe<UpsertUserPayload>;
 };
 
 
@@ -989,6 +1083,41 @@ export type MutationUpdateUserByIdArgs = {
   input: UpdateUserByIdInput;
 };
 
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpsertFilmArgs = {
+  input: UpsertFilmInput;
+  where: UpsertFilmWhere;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpsertMoodArgs = {
+  input: UpsertMoodInput;
+  where: UpsertMoodWhere;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpsertRecommendationArgs = {
+  input: UpsertRecommendationInput;
+  where: UpsertRecommendationWhere;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpsertRefRecommendationsWMoodArgs = {
+  input: UpsertRefRecommendationsWMoodInput;
+  where: UpsertRefRecommendationsWMoodWhere;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpsertUserArgs = {
+  input: UpsertUserInput;
+  where: UpsertUserWhere;
+};
+
 /** An object with a globally unique `ID`. */
 export type Node = {
   /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
@@ -1042,6 +1171,8 @@ export type Query = Node & {
   /** Reads a single `RefRecommendationsWMood` using its globally unique `ID`. */
   refRecommendationsWMood?: Maybe<RefRecommendationsWMood>;
   refRecommendationsWMoodById?: Maybe<RefRecommendationsWMood>;
+  /** Reads and enables pagination through a set of `Film`. */
+  searchFilms?: Maybe<FilmsConnection>;
   /** Reads a single `User` using its globally unique `ID`. */
   user?: Maybe<User>;
   userById?: Maybe<User>;
@@ -1163,6 +1294,17 @@ export type QueryRefRecommendationsWMoodByIdArgs = {
 
 
 /** The root query type which gives access points into the data universe. */
+export type QuerySearchFilmsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  search?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
 export type QueryUserArgs = {
   nodeId: Scalars['ID']['input'];
 };
@@ -1248,11 +1390,86 @@ export type RecommendationCondition = {
 /** An input for mutations affecting `Recommendation` */
 export type RecommendationInput = {
   createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  filmToMediaId?: InputMaybe<RecommendationMediaIdFkeyInput>;
   id?: InputMaybe<Scalars['Int']['input']>;
-  mediaId: Scalars['Int']['input'];
+  mediaId?: InputMaybe<Scalars['Int']['input']>;
   rating?: InputMaybe<Scalars['Int']['input']>;
-  recommenderId: Scalars['Int']['input'];
+  recommenderId?: InputMaybe<Scalars['Int']['input']>;
+  refRecommendationsWMoodsUsingId?: InputMaybe<RefRecommendationsWMoodsRecommendationIdFkeyInverseInput>;
   review?: InputMaybe<Scalars['String']['input']>;
+  userToRecommenderId?: InputMaybe<RecommendationRecommenderIdFkeyInput>;
+};
+
+/** The `film` to be created by this mutation. */
+export type RecommendationMediaIdFkeyFilmCreateInput = {
+  /** The time this film was first recommended. */
+  firstRecommendedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  genreIds: Array<InputMaybe<Scalars['Int']['input']>>;
+  /** The primary unique identifier for the film. */
+  id?: InputMaybe<Scalars['Int']['input']>;
+  /** The platform links for this film. */
+  links: Array<InputMaybe<Scalars['JSON']['input']>>;
+  originalLanguage: Scalars['String']['input'];
+  originalTitle: Scalars['String']['input'];
+  /** A short description of the film. */
+  overview?: InputMaybe<Scalars['String']['input']>;
+  /** The link to that film’s poster */
+  posterPath?: InputMaybe<Scalars['String']['input']>;
+  recommendationsUsingId?: InputMaybe<RecommendationMediaIdFkeyInverseInput>;
+  releaseDate: Scalars['Date']['input'];
+  /** The film’s title. */
+  title: Scalars['String']['input'];
+  tmdbId: Scalars['Int']['input'];
+};
+
+/** Input for the nested mutation of `film` in the `RecommendationInput` mutation. */
+export type RecommendationMediaIdFkeyInput = {
+  /** The primary key(s) for `film` for the far side of the relationship. */
+  connectById?: InputMaybe<FilmFilmPkeyConnect>;
+  /** The primary key(s) for `film` for the far side of the relationship. */
+  connectByNodeId?: InputMaybe<FilmNodeIdConnect>;
+  /** A `FilmInput` object that will be created and connected to this object. */
+  create?: InputMaybe<RecommendationMediaIdFkeyFilmCreateInput>;
+  /** The primary key(s) for `film` for the far side of the relationship. */
+  deleteById?: InputMaybe<FilmFilmPkeyDelete>;
+  /** The primary key(s) for `film` for the far side of the relationship. */
+  deleteByNodeId?: InputMaybe<FilmNodeIdDelete>;
+  /** The primary key(s) and patch data for `film` for the far side of the relationship. */
+  updateById?: InputMaybe<FilmOnRecommendationForRecommendationMediaIdFkeyUsingFilmPkeyUpdate>;
+  /** The primary key(s) and patch data for `film` for the far side of the relationship. */
+  updateByNodeId?: InputMaybe<RecommendationOnRecommendationForRecommendationMediaIdFkeyNodeIdUpdate>;
+};
+
+/** Input for the nested mutation of `recommendation` in the `FilmInput` mutation. */
+export type RecommendationMediaIdFkeyInverseInput = {
+  /** The primary key(s) for `recommendation` for the far side of the relationship. */
+  connectById?: InputMaybe<Array<RecommendationRecommendationPkeyConnect>>;
+  /** The primary key(s) for `recommendation` for the far side of the relationship. */
+  connectByNodeId?: InputMaybe<Array<RecommendationNodeIdConnect>>;
+  /** A `RecommendationInput` object that will be created and connected to this object. */
+  create?: InputMaybe<Array<RecommendationMediaIdFkeyRecommendationCreateInput>>;
+  /** The primary key(s) for `recommendation` for the far side of the relationship. */
+  deleteById?: InputMaybe<Array<RecommendationRecommendationPkeyDelete>>;
+  /** The primary key(s) for `recommendation` for the far side of the relationship. */
+  deleteByNodeId?: InputMaybe<Array<RecommendationNodeIdDelete>>;
+  /** Flag indicating whether all other `recommendation` records that match this relationship should be removed. */
+  deleteOthers?: InputMaybe<Scalars['Boolean']['input']>;
+  /** The primary key(s) and patch data for `recommendation` for the far side of the relationship. */
+  updateById?: InputMaybe<Array<RecommendationOnRecommendationForRecommendationMediaIdFkeyUsingRecommendationPkeyUpdate>>;
+  /** The primary key(s) and patch data for `recommendation` for the far side of the relationship. */
+  updateByNodeId?: InputMaybe<Array<FilmOnRecommendationForRecommendationMediaIdFkeyNodeIdUpdate>>;
+};
+
+/** The `recommendation` to be created by this mutation. */
+export type RecommendationMediaIdFkeyRecommendationCreateInput = {
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  filmToMediaId?: InputMaybe<RecommendationMediaIdFkeyInput>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  rating?: InputMaybe<Scalars['Int']['input']>;
+  recommenderId?: InputMaybe<Scalars['Int']['input']>;
+  refRecommendationsWMoodsUsingId?: InputMaybe<RefRecommendationsWMoodsRecommendationIdFkeyInverseInput>;
+  review?: InputMaybe<Scalars['String']['input']>;
+  userToRecommenderId?: InputMaybe<RecommendationRecommenderIdFkeyInput>;
 };
 
 /** A connection to a list of `Mood` values, with data from `RefRecommendationsWMood`. */
@@ -1291,14 +1508,150 @@ export type RecommendationMoodsByRefRecommendationsWMoodRecommendationIdAndMoodI
   orderBy?: InputMaybe<Array<RefRecommendationsWMoodsOrderBy>>;
 };
 
+/** The globally unique `ID` look up for the row to connect. */
+export type RecommendationNodeIdConnect = {
+  /** The globally unique `ID` which identifies a single `recommendation` to be connected. */
+  nodeId: Scalars['ID']['input'];
+};
+
+/** The globally unique `ID` look up for the row to delete. */
+export type RecommendationNodeIdDelete = {
+  /** The globally unique `ID` which identifies a single `recommendation` to be deleted. */
+  nodeId: Scalars['ID']['input'];
+};
+
+/** The globally unique `ID` look up for the row to update. */
+export type RecommendationOnRecommendationForRecommendationMediaIdFkeyNodeIdUpdate = {
+  /** An object where the defined keys will be set on the `film` being updated. */
+  filmPatch: FilmPatch;
+  /** The globally unique `ID` which identifies a single `film` to be connected. */
+  nodeId: Scalars['ID']['input'];
+};
+
+/** The fields on `recommendation` to look up the row to update. */
+export type RecommendationOnRecommendationForRecommendationMediaIdFkeyUsingRecommendationPkeyUpdate = {
+  id: Scalars['Int']['input'];
+  /** An object where the defined keys will be set on the `recommendation` being updated. */
+  recommendationPatch: UpdateRecommendationOnRecommendationForRecommendationMediaIdFkeyPatch;
+};
+
+/** The globally unique `ID` look up for the row to update. */
+export type RecommendationOnRecommendationForRecommendationRecommenderIdFkeyNodeIdUpdate = {
+  /** The globally unique `ID` which identifies a single `user` to be connected. */
+  nodeId: Scalars['ID']['input'];
+  /** An object where the defined keys will be set on the `user` being updated. */
+  userPatch: UserPatch;
+};
+
+/** The fields on `recommendation` to look up the row to update. */
+export type RecommendationOnRecommendationForRecommendationRecommenderIdFkeyUsingRecommendationPkeyUpdate = {
+  id: Scalars['Int']['input'];
+  /** An object where the defined keys will be set on the `recommendation` being updated. */
+  recommendationPatch: UpdateRecommendationOnRecommendationForRecommendationRecommenderIdFkeyPatch;
+};
+
+/** The globally unique `ID` look up for the row to update. */
+export type RecommendationOnRefRecommendationsWMoodForRefRecommendationsWMoodsRecommendationIdFkeyNodeIdUpdate = {
+  /** The globally unique `ID` which identifies a single `refRecommendationsWMood` to be connected. */
+  nodeId: Scalars['ID']['input'];
+  /** An object where the defined keys will be set on the `refRecommendationsWMood` being updated. */
+  refRecommendationsWMoodPatch: RefRecommendationsWMoodPatch;
+};
+
+/** The fields on `recommendation` to look up the row to update. */
+export type RecommendationOnRefRecommendationsWMoodForRefRecommendationsWMoodsRecommendationIdFkeyUsingRecommendationPkeyUpdate = {
+  id: Scalars['Int']['input'];
+  /** An object where the defined keys will be set on the `recommendation` being updated. */
+  recommendationPatch: UpdateRecommendationOnRefRecommendationsWMoodForRefRecommendationsWMoodsRecommendationIdFkeyPatch;
+};
+
 /** Represents an update to a `Recommendation`. Fields that are set will be updated. */
 export type RecommendationPatch = {
   createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  filmToMediaId?: InputMaybe<RecommendationMediaIdFkeyInput>;
   id?: InputMaybe<Scalars['Int']['input']>;
   mediaId?: InputMaybe<Scalars['Int']['input']>;
   rating?: InputMaybe<Scalars['Int']['input']>;
   recommenderId?: InputMaybe<Scalars['Int']['input']>;
+  refRecommendationsWMoodsUsingId?: InputMaybe<RefRecommendationsWMoodsRecommendationIdFkeyInverseInput>;
   review?: InputMaybe<Scalars['String']['input']>;
+  userToRecommenderId?: InputMaybe<RecommendationRecommenderIdFkeyInput>;
+};
+
+/** The fields on `recommendation` to look up the row to connect. */
+export type RecommendationRecommendationPkeyConnect = {
+  id: Scalars['Int']['input'];
+};
+
+/** The fields on `recommendation` to look up the row to delete. */
+export type RecommendationRecommendationPkeyDelete = {
+  id: Scalars['Int']['input'];
+};
+
+/** Input for the nested mutation of `user` in the `RecommendationInput` mutation. */
+export type RecommendationRecommenderIdFkeyInput = {
+  /** The primary key(s) for `user` for the far side of the relationship. */
+  connectById?: InputMaybe<UserUserPkeyConnect>;
+  /** The primary key(s) for `user` for the far side of the relationship. */
+  connectByNodeId?: InputMaybe<UserNodeIdConnect>;
+  /** A `UserInput` object that will be created and connected to this object. */
+  create?: InputMaybe<RecommendationRecommenderIdFkeyUserCreateInput>;
+  /** The primary key(s) for `user` for the far side of the relationship. */
+  deleteById?: InputMaybe<UserUserPkeyDelete>;
+  /** The primary key(s) for `user` for the far side of the relationship. */
+  deleteByNodeId?: InputMaybe<UserNodeIdDelete>;
+  /** The primary key(s) and patch data for `user` for the far side of the relationship. */
+  updateById?: InputMaybe<UserOnRecommendationForRecommendationRecommenderIdFkeyUsingUserPkeyUpdate>;
+  /** The primary key(s) and patch data for `user` for the far side of the relationship. */
+  updateByNodeId?: InputMaybe<RecommendationOnRecommendationForRecommendationRecommenderIdFkeyNodeIdUpdate>;
+};
+
+/** Input for the nested mutation of `recommendation` in the `UserInput` mutation. */
+export type RecommendationRecommenderIdFkeyInverseInput = {
+  /** The primary key(s) for `recommendation` for the far side of the relationship. */
+  connectById?: InputMaybe<Array<RecommendationRecommendationPkeyConnect>>;
+  /** The primary key(s) for `recommendation` for the far side of the relationship. */
+  connectByNodeId?: InputMaybe<Array<RecommendationNodeIdConnect>>;
+  /** A `RecommendationInput` object that will be created and connected to this object. */
+  create?: InputMaybe<Array<RecommendationRecommenderIdFkeyRecommendationCreateInput>>;
+  /** The primary key(s) for `recommendation` for the far side of the relationship. */
+  deleteById?: InputMaybe<Array<RecommendationRecommendationPkeyDelete>>;
+  /** The primary key(s) for `recommendation` for the far side of the relationship. */
+  deleteByNodeId?: InputMaybe<Array<RecommendationNodeIdDelete>>;
+  /** Flag indicating whether all other `recommendation` records that match this relationship should be removed. */
+  deleteOthers?: InputMaybe<Scalars['Boolean']['input']>;
+  /** The primary key(s) and patch data for `recommendation` for the far side of the relationship. */
+  updateById?: InputMaybe<Array<RecommendationOnRecommendationForRecommendationRecommenderIdFkeyUsingRecommendationPkeyUpdate>>;
+  /** The primary key(s) and patch data for `recommendation` for the far side of the relationship. */
+  updateByNodeId?: InputMaybe<Array<UserOnRecommendationForRecommendationRecommenderIdFkeyNodeIdUpdate>>;
+};
+
+/** The `recommendation` to be created by this mutation. */
+export type RecommendationRecommenderIdFkeyRecommendationCreateInput = {
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  filmToMediaId?: InputMaybe<RecommendationMediaIdFkeyInput>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  mediaId?: InputMaybe<Scalars['Int']['input']>;
+  rating?: InputMaybe<Scalars['Int']['input']>;
+  refRecommendationsWMoodsUsingId?: InputMaybe<RefRecommendationsWMoodsRecommendationIdFkeyInverseInput>;
+  review?: InputMaybe<Scalars['String']['input']>;
+  userToRecommenderId?: InputMaybe<RecommendationRecommenderIdFkeyInput>;
+};
+
+/** The `user` to be created by this mutation. */
+export type RecommendationRecommenderIdFkeyUserCreateInput = {
+  /** The time this person was created. */
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** The user’s email  . */
+  email: Scalars['String']['input'];
+  /** The user’s first name. */
+  firstName: Scalars['String']['input'];
+  /** The primary unique identifier for the user. */
+  id?: InputMaybe<Scalars['Int']['input']>;
+  /** The user’s last name. */
+  lastName?: InputMaybe<Scalars['String']['input']>;
+  password: Scalars['String']['input'];
+  recommendationsUsingId?: InputMaybe<RecommendationRecommenderIdFkeyInverseInput>;
 };
 
 /** A connection to a list of `Recommendation` values. */
@@ -1371,15 +1724,71 @@ export type RefRecommendationsWMoodCondition = {
 /** An input for mutations affecting `RefRecommendationsWMood` */
 export type RefRecommendationsWMoodInput = {
   id?: InputMaybe<Scalars['Int']['input']>;
-  moodId: Scalars['Int']['input'];
-  recommendationId: Scalars['Int']['input'];
+  moodId?: InputMaybe<Scalars['Int']['input']>;
+  moodToMoodId?: InputMaybe<RefRecommendationsWMoodsMoodIdFkeyInput>;
+  recommendationId?: InputMaybe<Scalars['Int']['input']>;
+  recommendationToRecommendationId?: InputMaybe<RefRecommendationsWMoodsRecommendationIdFkeyInput>;
+};
+
+/** The globally unique `ID` look up for the row to connect. */
+export type RefRecommendationsWMoodNodeIdConnect = {
+  /** The globally unique `ID` which identifies a single `refRecommendationsWMood` to be connected. */
+  nodeId: Scalars['ID']['input'];
+};
+
+/** The globally unique `ID` look up for the row to delete. */
+export type RefRecommendationsWMoodNodeIdDelete = {
+  /** The globally unique `ID` which identifies a single `refRecommendationsWMood` to be deleted. */
+  nodeId: Scalars['ID']['input'];
+};
+
+/** The globally unique `ID` look up for the row to update. */
+export type RefRecommendationsWMoodOnRefRecommendationsWMoodForRefRecommendationsWMoodsMoodIdFkeyNodeIdUpdate = {
+  /** An object where the defined keys will be set on the `mood` being updated. */
+  moodPatch: MoodPatch;
+  /** The globally unique `ID` which identifies a single `mood` to be connected. */
+  nodeId: Scalars['ID']['input'];
+};
+
+/** The fields on `refRecommendationsWMood` to look up the row to update. */
+export type RefRecommendationsWMoodOnRefRecommendationsWMoodForRefRecommendationsWMoodsMoodIdFkeyUsingRefRecommendationsWMoodsPkeyUpdate = {
+  id: Scalars['Int']['input'];
+  /** An object where the defined keys will be set on the `refRecommendationsWMood` being updated. */
+  refRecommendationsWMoodPatch: UpdateRefRecommendationsWMoodOnRefRecommendationsWMoodForRefRecommendationsWMoodsMoodIdFkeyPatch;
+};
+
+/** The globally unique `ID` look up for the row to update. */
+export type RefRecommendationsWMoodOnRefRecommendationsWMoodForRefRecommendationsWMoodsRecommendationIdFkeyNodeIdUpdate = {
+  /** The globally unique `ID` which identifies a single `recommendation` to be connected. */
+  nodeId: Scalars['ID']['input'];
+  /** An object where the defined keys will be set on the `recommendation` being updated. */
+  recommendationPatch: RecommendationPatch;
+};
+
+/** The fields on `refRecommendationsWMood` to look up the row to update. */
+export type RefRecommendationsWMoodOnRefRecommendationsWMoodForRefRecommendationsWMoodsRecommendationIdFkeyUsingRefRecommendationsWMoodsPkeyUpdate = {
+  id: Scalars['Int']['input'];
+  /** An object where the defined keys will be set on the `refRecommendationsWMood` being updated. */
+  refRecommendationsWMoodPatch: UpdateRefRecommendationsWMoodOnRefRecommendationsWMoodForRefRecommendationsWMoodsRecommendationIdFkeyPatch;
 };
 
 /** Represents an update to a `RefRecommendationsWMood`. Fields that are set will be updated. */
 export type RefRecommendationsWMoodPatch = {
   id?: InputMaybe<Scalars['Int']['input']>;
   moodId?: InputMaybe<Scalars['Int']['input']>;
+  moodToMoodId?: InputMaybe<RefRecommendationsWMoodsMoodIdFkeyInput>;
   recommendationId?: InputMaybe<Scalars['Int']['input']>;
+  recommendationToRecommendationId?: InputMaybe<RefRecommendationsWMoodsRecommendationIdFkeyInput>;
+};
+
+/** The fields on `refRecommendationsWMood` to look up the row to connect. */
+export type RefRecommendationsWMoodRefRecommendationsWMoodsPkeyConnect = {
+  id: Scalars['Int']['input'];
+};
+
+/** The fields on `refRecommendationsWMood` to look up the row to delete. */
+export type RefRecommendationsWMoodRefRecommendationsWMoodsPkeyDelete = {
+  id: Scalars['Int']['input'];
 };
 
 /** A connection to a list of `RefRecommendationsWMood` values. */
@@ -1404,6 +1813,65 @@ export type RefRecommendationsWMoodsEdge = {
   node?: Maybe<RefRecommendationsWMood>;
 };
 
+/** Input for the nested mutation of `mood` in the `RefRecommendationsWMoodInput` mutation. */
+export type RefRecommendationsWMoodsMoodIdFkeyInput = {
+  /** The primary key(s) for `mood` for the far side of the relationship. */
+  connectById?: InputMaybe<MoodMoodPkeyConnect>;
+  /** The primary key(s) for `mood` for the far side of the relationship. */
+  connectByNodeId?: InputMaybe<MoodNodeIdConnect>;
+  /** A `MoodInput` object that will be created and connected to this object. */
+  create?: InputMaybe<RefRecommendationsWMoodsMoodIdFkeyMoodCreateInput>;
+  /** The primary key(s) for `mood` for the far side of the relationship. */
+  deleteById?: InputMaybe<MoodMoodPkeyDelete>;
+  /** The primary key(s) for `mood` for the far side of the relationship. */
+  deleteByNodeId?: InputMaybe<MoodNodeIdDelete>;
+  /** The primary key(s) and patch data for `mood` for the far side of the relationship. */
+  updateById?: InputMaybe<MoodOnRefRecommendationsWMoodForRefRecommendationsWMoodsMoodIdFkeyUsingMoodPkeyUpdate>;
+  /** The primary key(s) and patch data for `mood` for the far side of the relationship. */
+  updateByNodeId?: InputMaybe<RefRecommendationsWMoodOnRefRecommendationsWMoodForRefRecommendationsWMoodsMoodIdFkeyNodeIdUpdate>;
+};
+
+/** Input for the nested mutation of `refRecommendationsWMood` in the `MoodInput` mutation. */
+export type RefRecommendationsWMoodsMoodIdFkeyInverseInput = {
+  /** The primary key(s) for `refRecommendationsWMood` for the far side of the relationship. */
+  connectById?: InputMaybe<Array<RefRecommendationsWMoodRefRecommendationsWMoodsPkeyConnect>>;
+  /** The primary key(s) for `refRecommendationsWMood` for the far side of the relationship. */
+  connectByNodeId?: InputMaybe<Array<RefRecommendationsWMoodNodeIdConnect>>;
+  /** A `RefRecommendationsWMoodInput` object that will be created and connected to this object. */
+  create?: InputMaybe<Array<RefRecommendationsWMoodsMoodIdFkeyRefRecommendationsWMoodsCreateInput>>;
+  /** The primary key(s) for `refRecommendationsWMood` for the far side of the relationship. */
+  deleteById?: InputMaybe<Array<RefRecommendationsWMoodRefRecommendationsWMoodsPkeyDelete>>;
+  /** The primary key(s) for `refRecommendationsWMood` for the far side of the relationship. */
+  deleteByNodeId?: InputMaybe<Array<RefRecommendationsWMoodNodeIdDelete>>;
+  /** Flag indicating whether all other `refRecommendationsWMood` records that match this relationship should be removed. */
+  deleteOthers?: InputMaybe<Scalars['Boolean']['input']>;
+  /** The primary key(s) and patch data for `refRecommendationsWMood` for the far side of the relationship. */
+  updateById?: InputMaybe<Array<RefRecommendationsWMoodOnRefRecommendationsWMoodForRefRecommendationsWMoodsMoodIdFkeyUsingRefRecommendationsWMoodsPkeyUpdate>>;
+  /** The primary key(s) and patch data for `refRecommendationsWMood` for the far side of the relationship. */
+  updateByNodeId?: InputMaybe<Array<MoodOnRefRecommendationsWMoodForRefRecommendationsWMoodsMoodIdFkeyNodeIdUpdate>>;
+};
+
+/** The `mood` to be created by this mutation. */
+export type RefRecommendationsWMoodsMoodIdFkeyMoodCreateInput = {
+  /** The time this mood was created. */
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** A longer description of what a mood means. */
+  description: Scalars['String']['input'];
+  /** The primary unique identifier for the mood. */
+  id?: InputMaybe<Scalars['Int']['input']>;
+  /** The name given to the mood. */
+  name: Scalars['String']['input'];
+  refRecommendationsWMoodsUsingId?: InputMaybe<RefRecommendationsWMoodsMoodIdFkeyInverseInput>;
+};
+
+/** The `refRecommendationsWMood` to be created by this mutation. */
+export type RefRecommendationsWMoodsMoodIdFkeyRefRecommendationsWMoodsCreateInput = {
+  id?: InputMaybe<Scalars['Int']['input']>;
+  moodToMoodId?: InputMaybe<RefRecommendationsWMoodsMoodIdFkeyInput>;
+  recommendationId?: InputMaybe<Scalars['Int']['input']>;
+  recommendationToRecommendationId?: InputMaybe<RefRecommendationsWMoodsRecommendationIdFkeyInput>;
+};
+
 /** Methods to use when ordering `RefRecommendationsWMood`. */
 export enum RefRecommendationsWMoodsOrderBy {
   IdAsc = 'ID_ASC',
@@ -1416,6 +1884,65 @@ export enum RefRecommendationsWMoodsOrderBy {
   RecommendationIdAsc = 'RECOMMENDATION_ID_ASC',
   RecommendationIdDesc = 'RECOMMENDATION_ID_DESC'
 }
+
+/** Input for the nested mutation of `recommendation` in the `RefRecommendationsWMoodInput` mutation. */
+export type RefRecommendationsWMoodsRecommendationIdFkeyInput = {
+  /** The primary key(s) for `recommendation` for the far side of the relationship. */
+  connectById?: InputMaybe<RecommendationRecommendationPkeyConnect>;
+  /** The primary key(s) for `recommendation` for the far side of the relationship. */
+  connectByNodeId?: InputMaybe<RecommendationNodeIdConnect>;
+  /** A `RecommendationInput` object that will be created and connected to this object. */
+  create?: InputMaybe<RefRecommendationsWMoodsRecommendationIdFkeyRecommendationCreateInput>;
+  /** The primary key(s) for `recommendation` for the far side of the relationship. */
+  deleteById?: InputMaybe<RecommendationRecommendationPkeyDelete>;
+  /** The primary key(s) for `recommendation` for the far side of the relationship. */
+  deleteByNodeId?: InputMaybe<RecommendationNodeIdDelete>;
+  /** The primary key(s) and patch data for `recommendation` for the far side of the relationship. */
+  updateById?: InputMaybe<RecommendationOnRefRecommendationsWMoodForRefRecommendationsWMoodsRecommendationIdFkeyUsingRecommendationPkeyUpdate>;
+  /** The primary key(s) and patch data for `recommendation` for the far side of the relationship. */
+  updateByNodeId?: InputMaybe<RefRecommendationsWMoodOnRefRecommendationsWMoodForRefRecommendationsWMoodsRecommendationIdFkeyNodeIdUpdate>;
+};
+
+/** Input for the nested mutation of `refRecommendationsWMood` in the `RecommendationInput` mutation. */
+export type RefRecommendationsWMoodsRecommendationIdFkeyInverseInput = {
+  /** The primary key(s) for `refRecommendationsWMood` for the far side of the relationship. */
+  connectById?: InputMaybe<Array<RefRecommendationsWMoodRefRecommendationsWMoodsPkeyConnect>>;
+  /** The primary key(s) for `refRecommendationsWMood` for the far side of the relationship. */
+  connectByNodeId?: InputMaybe<Array<RefRecommendationsWMoodNodeIdConnect>>;
+  /** A `RefRecommendationsWMoodInput` object that will be created and connected to this object. */
+  create?: InputMaybe<Array<RefRecommendationsWMoodsRecommendationIdFkeyRefRecommendationsWMoodsCreateInput>>;
+  /** The primary key(s) for `refRecommendationsWMood` for the far side of the relationship. */
+  deleteById?: InputMaybe<Array<RefRecommendationsWMoodRefRecommendationsWMoodsPkeyDelete>>;
+  /** The primary key(s) for `refRecommendationsWMood` for the far side of the relationship. */
+  deleteByNodeId?: InputMaybe<Array<RefRecommendationsWMoodNodeIdDelete>>;
+  /** Flag indicating whether all other `refRecommendationsWMood` records that match this relationship should be removed. */
+  deleteOthers?: InputMaybe<Scalars['Boolean']['input']>;
+  /** The primary key(s) and patch data for `refRecommendationsWMood` for the far side of the relationship. */
+  updateById?: InputMaybe<Array<RefRecommendationsWMoodOnRefRecommendationsWMoodForRefRecommendationsWMoodsRecommendationIdFkeyUsingRefRecommendationsWMoodsPkeyUpdate>>;
+  /** The primary key(s) and patch data for `refRecommendationsWMood` for the far side of the relationship. */
+  updateByNodeId?: InputMaybe<Array<RecommendationOnRefRecommendationsWMoodForRefRecommendationsWMoodsRecommendationIdFkeyNodeIdUpdate>>;
+};
+
+/** The `recommendation` to be created by this mutation. */
+export type RefRecommendationsWMoodsRecommendationIdFkeyRecommendationCreateInput = {
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  filmToMediaId?: InputMaybe<RecommendationMediaIdFkeyInput>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  mediaId?: InputMaybe<Scalars['Int']['input']>;
+  rating?: InputMaybe<Scalars['Int']['input']>;
+  recommenderId?: InputMaybe<Scalars['Int']['input']>;
+  refRecommendationsWMoodsUsingId?: InputMaybe<RefRecommendationsWMoodsRecommendationIdFkeyInverseInput>;
+  review?: InputMaybe<Scalars['String']['input']>;
+  userToRecommenderId?: InputMaybe<RecommendationRecommenderIdFkeyInput>;
+};
+
+/** The `refRecommendationsWMood` to be created by this mutation. */
+export type RefRecommendationsWMoodsRecommendationIdFkeyRefRecommendationsWMoodsCreateInput = {
+  id?: InputMaybe<Scalars['Int']['input']>;
+  moodId?: InputMaybe<Scalars['Int']['input']>;
+  moodToMoodId?: InputMaybe<RefRecommendationsWMoodsMoodIdFkeyInput>;
+  recommendationToRecommendationId?: InputMaybe<RefRecommendationsWMoodsRecommendationIdFkeyInput>;
+};
 
 /** All input for the `updateFilmById` mutation. */
 export type UpdateFilmByIdInput = {
@@ -1663,6 +2190,174 @@ export type UpdateUserPayloadUserEdgeArgs = {
   orderBy?: InputMaybe<Array<UsersOrderBy>>;
 };
 
+/** All input for the upsert `Film` mutation. */
+export type UpsertFilmInput = {
+  /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The `Film` to be upserted by this mutation. */
+  film: FilmInput;
+};
+
+/** The output of our upsert `Film` mutation. */
+export type UpsertFilmPayload = {
+  __typename?: 'UpsertFilmPayload';
+  /** The exact same `clientMutationId` that was provided in the mutation input, unchanged and unused. May be used by a client to track mutations. */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** The `Film` that was upserted by this mutation. */
+  film?: Maybe<Film>;
+  /** An edge for our `Film`. May be used by Relay 1. */
+  filmEdge?: Maybe<FilmsEdge>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+};
+
+
+/** The output of our upsert `Film` mutation. */
+export type UpsertFilmPayloadFilmEdgeArgs = {
+  orderBy?: InputMaybe<Array<FilmsOrderBy>>;
+};
+
+/** Where conditions for the upsert `Film` mutation. */
+export type UpsertFilmWhere = {
+  id?: InputMaybe<Scalars['Int']['input']>;
+};
+
+/** All input for the upsert `Mood` mutation. */
+export type UpsertMoodInput = {
+  /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The `Mood` to be upserted by this mutation. */
+  mood: MoodInput;
+};
+
+/** The output of our upsert `Mood` mutation. */
+export type UpsertMoodPayload = {
+  __typename?: 'UpsertMoodPayload';
+  /** The exact same `clientMutationId` that was provided in the mutation input, unchanged and unused. May be used by a client to track mutations. */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** The `Mood` that was upserted by this mutation. */
+  mood?: Maybe<Mood>;
+  /** An edge for our `Mood`. May be used by Relay 1. */
+  moodEdge?: Maybe<MoodsEdge>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+};
+
+
+/** The output of our upsert `Mood` mutation. */
+export type UpsertMoodPayloadMoodEdgeArgs = {
+  orderBy?: InputMaybe<Array<MoodsOrderBy>>;
+};
+
+/** Where conditions for the upsert `Mood` mutation. */
+export type UpsertMoodWhere = {
+  id?: InputMaybe<Scalars['Int']['input']>;
+};
+
+/** All input for the upsert `Recommendation` mutation. */
+export type UpsertRecommendationInput = {
+  /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The `Recommendation` to be upserted by this mutation. */
+  recommendation: RecommendationInput;
+};
+
+/** The output of our upsert `Recommendation` mutation. */
+export type UpsertRecommendationPayload = {
+  __typename?: 'UpsertRecommendationPayload';
+  /** The exact same `clientMutationId` that was provided in the mutation input, unchanged and unused. May be used by a client to track mutations. */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Reads a single `Film` that is related to this `Recommendation`. */
+  filmByMediaId?: Maybe<Film>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** The `Recommendation` that was upserted by this mutation. */
+  recommendation?: Maybe<Recommendation>;
+  /** An edge for our `Recommendation`. May be used by Relay 1. */
+  recommendationEdge?: Maybe<RecommendationsEdge>;
+  /** Reads a single `User` that is related to this `Recommendation`. */
+  userByRecommenderId?: Maybe<User>;
+};
+
+
+/** The output of our upsert `Recommendation` mutation. */
+export type UpsertRecommendationPayloadRecommendationEdgeArgs = {
+  orderBy?: InputMaybe<Array<RecommendationsOrderBy>>;
+};
+
+/** Where conditions for the upsert `Recommendation` mutation. */
+export type UpsertRecommendationWhere = {
+  id?: InputMaybe<Scalars['Int']['input']>;
+};
+
+/** All input for the upsert `RefRecommendationsWMood` mutation. */
+export type UpsertRefRecommendationsWMoodInput = {
+  /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The `RefRecommendationsWMood` to be upserted by this mutation. */
+  refRecommendationsWMood: RefRecommendationsWMoodInput;
+};
+
+/** The output of our upsert `RefRecommendationsWMood` mutation. */
+export type UpsertRefRecommendationsWMoodPayload = {
+  __typename?: 'UpsertRefRecommendationsWMoodPayload';
+  /** The exact same `clientMutationId` that was provided in the mutation input, unchanged and unused. May be used by a client to track mutations. */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Reads a single `Mood` that is related to this `RefRecommendationsWMood`. */
+  moodByMoodId?: Maybe<Mood>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `Recommendation` that is related to this `RefRecommendationsWMood`. */
+  recommendationByRecommendationId?: Maybe<Recommendation>;
+  /** The `RefRecommendationsWMood` that was upserted by this mutation. */
+  refRecommendationsWMood?: Maybe<RefRecommendationsWMood>;
+  /** An edge for our `RefRecommendationsWMood`. May be used by Relay 1. */
+  refRecommendationsWMoodEdge?: Maybe<RefRecommendationsWMoodsEdge>;
+};
+
+
+/** The output of our upsert `RefRecommendationsWMood` mutation. */
+export type UpsertRefRecommendationsWMoodPayloadRefRecommendationsWMoodEdgeArgs = {
+  orderBy?: InputMaybe<Array<RefRecommendationsWMoodsOrderBy>>;
+};
+
+/** Where conditions for the upsert `RefRecommendationsWMood` mutation. */
+export type UpsertRefRecommendationsWMoodWhere = {
+  id?: InputMaybe<Scalars['Int']['input']>;
+};
+
+/** All input for the upsert `User` mutation. */
+export type UpsertUserInput = {
+  /** An arbitrary string value with no semantic meaning. Will be included in the payload verbatim. May be used to track mutations by the client. */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The `User` to be upserted by this mutation. */
+  user: UserInput;
+};
+
+/** The output of our upsert `User` mutation. */
+export type UpsertUserPayload = {
+  __typename?: 'UpsertUserPayload';
+  /** The exact same `clientMutationId` that was provided in the mutation input, unchanged and unused. May be used by a client to track mutations. */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** The `User` that was upserted by this mutation. */
+  user?: Maybe<User>;
+  /** An edge for our `User`. May be used by Relay 1. */
+  userEdge?: Maybe<UsersEdge>;
+};
+
+
+/** The output of our upsert `User` mutation. */
+export type UpsertUserPayloadUserEdgeArgs = {
+  orderBy?: InputMaybe<Array<UsersOrderBy>>;
+};
+
+/** Where conditions for the upsert `User` mutation. */
+export type UpsertUserWhere = {
+  id?: InputMaybe<Scalars['Int']['input']>;
+};
+
 /** A user of the app. */
 export type User = Node & {
   __typename?: 'User';
@@ -1774,6 +2469,35 @@ export type UserInput = {
   /** The user’s last name. */
   lastName?: InputMaybe<Scalars['String']['input']>;
   password: Scalars['String']['input'];
+  recommendationsUsingId?: InputMaybe<RecommendationRecommenderIdFkeyInverseInput>;
+};
+
+/** The globally unique `ID` look up for the row to connect. */
+export type UserNodeIdConnect = {
+  /** The globally unique `ID` which identifies a single `user` to be connected. */
+  nodeId: Scalars['ID']['input'];
+};
+
+/** The globally unique `ID` look up for the row to delete. */
+export type UserNodeIdDelete = {
+  /** The globally unique `ID` which identifies a single `user` to be deleted. */
+  nodeId: Scalars['ID']['input'];
+};
+
+/** The globally unique `ID` look up for the row to update. */
+export type UserOnRecommendationForRecommendationRecommenderIdFkeyNodeIdUpdate = {
+  /** The globally unique `ID` which identifies a single `recommendation` to be connected. */
+  nodeId: Scalars['ID']['input'];
+  /** An object where the defined keys will be set on the `recommendation` being updated. */
+  recommendationPatch: RecommendationPatch;
+};
+
+/** The fields on `user` to look up the row to update. */
+export type UserOnRecommendationForRecommendationRecommenderIdFkeyUsingUserPkeyUpdate = {
+  /** The primary unique identifier for the user. */
+  id: Scalars['Int']['input'];
+  /** An object where the defined keys will be set on the `user` being updated. */
+  userPatch: UpdateUserOnRecommendationForRecommendationRecommenderIdFkeyPatch;
 };
 
 /** Represents an update to a `User`. Fields that are set will be updated. */
@@ -1789,6 +2513,19 @@ export type UserPatch = {
   /** The user’s last name. */
   lastName?: InputMaybe<Scalars['String']['input']>;
   password?: InputMaybe<Scalars['String']['input']>;
+  recommendationsUsingId?: InputMaybe<RecommendationRecommenderIdFkeyInverseInput>;
+};
+
+/** The fields on `user` to look up the row to connect. */
+export type UserUserPkeyConnect = {
+  /** The primary unique identifier for the user. */
+  id: Scalars['Int']['input'];
+};
+
+/** The fields on `user` to look up the row to delete. */
+export type UserUserPkeyDelete = {
+  /** The primary unique identifier for the user. */
+  id: Scalars['Int']['input'];
 };
 
 /** A connection to a list of `User` values. */
@@ -1832,6 +2569,110 @@ export enum UsersOrderBy {
   PrimaryKeyDesc = 'PRIMARY_KEY_DESC'
 }
 
+/** An object where the defined keys will be set on the `film` being updated. */
+export type UpdateFilmOnRecommendationForRecommendationMediaIdFkeyPatch = {
+  /** The time this film was first recommended. */
+  firstRecommendedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  genreIds?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
+  /** The primary unique identifier for the film. */
+  id?: InputMaybe<Scalars['Int']['input']>;
+  /** The platform links for this film. */
+  links?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  originalLanguage?: InputMaybe<Scalars['String']['input']>;
+  originalTitle?: InputMaybe<Scalars['String']['input']>;
+  /** A short description of the film. */
+  overview?: InputMaybe<Scalars['String']['input']>;
+  /** The link to that film’s poster */
+  posterPath?: InputMaybe<Scalars['String']['input']>;
+  recommendationsUsingId?: InputMaybe<RecommendationMediaIdFkeyInverseInput>;
+  releaseDate?: InputMaybe<Scalars['Date']['input']>;
+  /** The film’s title. */
+  title?: InputMaybe<Scalars['String']['input']>;
+  tmdbId?: InputMaybe<Scalars['Int']['input']>;
+};
+
+/** An object where the defined keys will be set on the `mood` being updated. */
+export type UpdateMoodOnRefRecommendationsWMoodForRefRecommendationsWMoodsMoodIdFkeyPatch = {
+  /** The time this mood was created. */
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** A longer description of what a mood means. */
+  description?: InputMaybe<Scalars['String']['input']>;
+  /** The primary unique identifier for the mood. */
+  id?: InputMaybe<Scalars['Int']['input']>;
+  /** The name given to the mood. */
+  name?: InputMaybe<Scalars['String']['input']>;
+  refRecommendationsWMoodsUsingId?: InputMaybe<RefRecommendationsWMoodsMoodIdFkeyInverseInput>;
+};
+
+/** An object where the defined keys will be set on the `recommendation` being updated. */
+export type UpdateRecommendationOnRecommendationForRecommendationMediaIdFkeyPatch = {
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  filmToMediaId?: InputMaybe<RecommendationMediaIdFkeyInput>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  rating?: InputMaybe<Scalars['Int']['input']>;
+  recommenderId?: InputMaybe<Scalars['Int']['input']>;
+  refRecommendationsWMoodsUsingId?: InputMaybe<RefRecommendationsWMoodsRecommendationIdFkeyInverseInput>;
+  review?: InputMaybe<Scalars['String']['input']>;
+  userToRecommenderId?: InputMaybe<RecommendationRecommenderIdFkeyInput>;
+};
+
+/** An object where the defined keys will be set on the `recommendation` being updated. */
+export type UpdateRecommendationOnRecommendationForRecommendationRecommenderIdFkeyPatch = {
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  filmToMediaId?: InputMaybe<RecommendationMediaIdFkeyInput>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  mediaId?: InputMaybe<Scalars['Int']['input']>;
+  rating?: InputMaybe<Scalars['Int']['input']>;
+  refRecommendationsWMoodsUsingId?: InputMaybe<RefRecommendationsWMoodsRecommendationIdFkeyInverseInput>;
+  review?: InputMaybe<Scalars['String']['input']>;
+  userToRecommenderId?: InputMaybe<RecommendationRecommenderIdFkeyInput>;
+};
+
+/** An object where the defined keys will be set on the `recommendation` being updated. */
+export type UpdateRecommendationOnRefRecommendationsWMoodForRefRecommendationsWMoodsRecommendationIdFkeyPatch = {
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  filmToMediaId?: InputMaybe<RecommendationMediaIdFkeyInput>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  mediaId?: InputMaybe<Scalars['Int']['input']>;
+  rating?: InputMaybe<Scalars['Int']['input']>;
+  recommenderId?: InputMaybe<Scalars['Int']['input']>;
+  refRecommendationsWMoodsUsingId?: InputMaybe<RefRecommendationsWMoodsRecommendationIdFkeyInverseInput>;
+  review?: InputMaybe<Scalars['String']['input']>;
+  userToRecommenderId?: InputMaybe<RecommendationRecommenderIdFkeyInput>;
+};
+
+/** An object where the defined keys will be set on the `refRecommendationsWMood` being updated. */
+export type UpdateRefRecommendationsWMoodOnRefRecommendationsWMoodForRefRecommendationsWMoodsMoodIdFkeyPatch = {
+  id?: InputMaybe<Scalars['Int']['input']>;
+  moodToMoodId?: InputMaybe<RefRecommendationsWMoodsMoodIdFkeyInput>;
+  recommendationId?: InputMaybe<Scalars['Int']['input']>;
+  recommendationToRecommendationId?: InputMaybe<RefRecommendationsWMoodsRecommendationIdFkeyInput>;
+};
+
+/** An object where the defined keys will be set on the `refRecommendationsWMood` being updated. */
+export type UpdateRefRecommendationsWMoodOnRefRecommendationsWMoodForRefRecommendationsWMoodsRecommendationIdFkeyPatch = {
+  id?: InputMaybe<Scalars['Int']['input']>;
+  moodId?: InputMaybe<Scalars['Int']['input']>;
+  moodToMoodId?: InputMaybe<RefRecommendationsWMoodsMoodIdFkeyInput>;
+  recommendationToRecommendationId?: InputMaybe<RefRecommendationsWMoodsRecommendationIdFkeyInput>;
+};
+
+/** An object where the defined keys will be set on the `user` being updated. */
+export type UpdateUserOnRecommendationForRecommendationRecommenderIdFkeyPatch = {
+  /** The time this person was created. */
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** The user’s email  . */
+  email?: InputMaybe<Scalars['String']['input']>;
+  /** The user’s first name. */
+  firstName?: InputMaybe<Scalars['String']['input']>;
+  /** The primary unique identifier for the user. */
+  id?: InputMaybe<Scalars['Int']['input']>;
+  /** The user’s last name. */
+  lastName?: InputMaybe<Scalars['String']['input']>;
+  password?: InputMaybe<Scalars['String']['input']>;
+  recommendationsUsingId?: InputMaybe<RecommendationRecommenderIdFkeyInverseInput>;
+};
+
 export type GetFilmsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1840,12 +2681,19 @@ export type GetFilmsQuery = { __typename?: 'Query', allFilms?: { __typename?: 'F
 export type FilmsByMoodQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FilmsByMoodQuery = { __typename?: 'Query', allMoods?: { __typename?: 'MoodsConnection', nodes: Array<{ __typename?: 'Mood', id: number, name: string, description: string, refRecommendationsWMoodsByMoodId: { __typename?: 'RefRecommendationsWMoodsConnection', nodes: Array<{ __typename?: 'RefRecommendationsWMood', recommendationByRecommendationId?: { __typename?: 'Recommendation', filmByMediaId?: { __typename?: 'Film', id: number, posterPath?: string | null, title: string } | null } | null } | null> } } | null> } | null };
+export type FilmsByMoodQuery = { __typename?: 'Query', allMoods?: { __typename?: 'MoodsConnection', nodes: Array<{ __typename?: 'Mood', id: number, name: string, description: string, refRecommendationsWMoodsByMoodId: { __typename?: 'RefRecommendationsWMoodsConnection', nodes: Array<{ __typename?: 'RefRecommendationsWMood', recommendationByRecommendationId?: { __typename?: 'Recommendation', filmByMediaId?: { __typename?: 'Film', id: number, posterPath?: string | null, title: string, tmdbId: number } | null } | null } | null> } } | null> } | null };
 
 export type FilmsByRecommenderQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FilmsByRecommenderQuery = { __typename?: 'Query', allUsers?: { __typename?: 'UsersConnection', nodes: Array<{ __typename?: 'User', firstName: string, lastName?: string | null, filmsByRecommendationRecommenderIdAndMediaId: { __typename?: 'UserFilmsByRecommendationRecommenderIdAndMediaIdManyToManyConnection', nodes: Array<{ __typename?: 'Film', id: number, posterPath?: string | null, title: string } | null> } } | null> } | null };
+export type FilmsByRecommenderQuery = { __typename?: 'Query', allUsers?: { __typename?: 'UsersConnection', nodes: Array<{ __typename?: 'User', firstName: string, lastName?: string | null, filmsByRecommendationRecommenderIdAndMediaId: { __typename?: 'UserFilmsByRecommendationRecommenderIdAndMediaIdManyToManyConnection', nodes: Array<{ __typename?: 'Film', id: number, posterPath?: string | null, title: string, tmdbId: number } | null> } } | null> } | null };
+
+export type SearchByTmdbIdQueryVariables = Exact<{
+  search?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type SearchByTmdbIdQuery = { __typename?: 'Query', searchFilms?: { __typename?: 'FilmsConnection', nodes: Array<{ __typename?: 'Film', title: string } | null> } | null };
 
 
 export const GetFilmsDocument = gql`
@@ -1929,6 +2777,7 @@ export const FilmsByMoodDocument = gql`
               id
               posterPath
               title
+              tmdbId
             }
           }
         }
@@ -1975,6 +2824,7 @@ export const FilmsByRecommenderDocument = gql`
           id
           posterPath
           title
+          tmdbId
         }
       }
     }
@@ -2008,3 +2858,40 @@ export function useFilmsByRecommenderLazyQuery(baseOptions?: Apollo.LazyQueryHoo
 export type FilmsByRecommenderQueryHookResult = ReturnType<typeof useFilmsByRecommenderQuery>;
 export type FilmsByRecommenderLazyQueryHookResult = ReturnType<typeof useFilmsByRecommenderLazyQuery>;
 export type FilmsByRecommenderQueryResult = Apollo.QueryResult<FilmsByRecommenderQuery, FilmsByRecommenderQueryVariables>;
+export const SearchByTmdbIdDocument = gql`
+    query searchByTmdbId($search: Int) {
+  searchFilms(search: $search) {
+    nodes {
+      title
+    }
+  }
+}
+    `;
+
+/**
+ * __useSearchByTmdbIdQuery__
+ *
+ * To run a query within a React component, call `useSearchByTmdbIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchByTmdbIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchByTmdbIdQuery({
+ *   variables: {
+ *      search: // value for 'search'
+ *   },
+ * });
+ */
+export function useSearchByTmdbIdQuery(baseOptions?: Apollo.QueryHookOptions<SearchByTmdbIdQuery, SearchByTmdbIdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SearchByTmdbIdQuery, SearchByTmdbIdQueryVariables>(SearchByTmdbIdDocument, options);
+      }
+export function useSearchByTmdbIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SearchByTmdbIdQuery, SearchByTmdbIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SearchByTmdbIdQuery, SearchByTmdbIdQueryVariables>(SearchByTmdbIdDocument, options);
+        }
+export type SearchByTmdbIdQueryHookResult = ReturnType<typeof useSearchByTmdbIdQuery>;
+export type SearchByTmdbIdLazyQueryHookResult = ReturnType<typeof useSearchByTmdbIdLazyQuery>;
+export type SearchByTmdbIdQueryResult = Apollo.QueryResult<SearchByTmdbIdQuery, SearchByTmdbIdQueryVariables>;

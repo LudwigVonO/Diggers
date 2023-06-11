@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "node",
+    "target": "es5",
     "modules":[
       "allowImportingTsExtensions"
     ],

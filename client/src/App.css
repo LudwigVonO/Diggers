@@ -27,20 +27,20 @@
 #root {
   height: 100%;
   text-align: center;
-  display: grid;
+  /* display: grid;
   grid-template-columns: [page-start] var(--custom-size-appMargin) [content-start] 1fr [content-end] var(--custom-size-appMargin) [page-end];
-  grid-template-rows: [navbar-start] var(--custom-size-navBarHeight) [navbar-end] auto [end-end];
+  grid-template-rows: [navbar-start] var(--custom-size-navBarHeight) [navbar-end] auto [end-end]; */
   background: var(--custom-color-primary);
   color: var(--custom-color-secondary);
 }
 
-.App {
+/* .App {
   grid-column: page-start / page-end;
   grid-row: navbar-start / end-end;
   display: grid;
   grid-template-columns: inherit;
   grid-template-rows: inherit;
-}
+} */
 
 #navbar {
   grid-column: content-start / content-end;
