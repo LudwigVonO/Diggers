@@ -1,18 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { FiltersContext } from "../Context/FiltersContext.tsx";
 import DropDown from "./Dropdown.tsx";
 
-const Filters: React.FC = (): JSX.Element => {
-  const [showDropDown, setShowDropDown] = useState<boolean>(false);
-  const [selectDisplay, setSelectDisplay] = useState<string>("Genre");
-  const displays = () => {
-    return ["Genre", "Recommender", "Mood"];
-  };
 
+const Filters: React.FC = (): JSX.Element => {
+  const filtersContext = useContext(FiltersContext);
   /**
    * Toggle the drop down menu
    */
   const toggleDropDown = () => {
-    setShowDropDown(!showDropDown);
+    filtersContext?.setShowDropDown(!filtersContext.showDropDown);
   };
 
   /**
@@ -23,7 +20,7 @@ const Filters: React.FC = (): JSX.Element => {
    */
   const dismissHandler = (event: React.FocusEvent<HTMLButtonElement>): void => {
     if (event.currentTarget === event.target) {
-      setShowDropDown(false);
+      filtersContext?.setShowDropDown(false);
     }
   };
 
@@ -34,7 +31,7 @@ const Filters: React.FC = (): JSX.Element => {
    * @param city  The selected city
    */
   const displaySelection = (display: string): void => {
-    setSelectDisplay(display);
+    filtersContext?.setSelectDisplay(display);
   };
 
   return (
@@ -47,20 +44,15 @@ const Filters: React.FC = (): JSX.Element => {
         </div>
       </div> */}
       <button
-        className={showDropDown ? "active" : undefined}
+        className={filtersContext?.showDropDown ? "active button-primary" : "button-primary"}
         onClick={(): void => toggleDropDown()}
         onBlur={(e: React.FocusEvent<HTMLButtonElement>): void =>
           dismissHandler(e)
         }
       >
-        <div>{selectDisplay ? "Display by " + selectDisplay : "Choose display ..."} </div>
-        {showDropDown && (
-          <DropDown
-            displays={displays()}
-            showDropDown={false}
-            toggleDropDown={(): void => toggleDropDown()}
-            displaySelection={displaySelection}
-          />
+        <div>{filtersContext?.selectDisplay ? "Display by " + filtersContext?.selectDisplay : "Choose display ..."} </div>
+        {filtersContext?.showDropDown && (
+          <DropDown displaySelection={displaySelection} />
         )}
       </button>
     </section>

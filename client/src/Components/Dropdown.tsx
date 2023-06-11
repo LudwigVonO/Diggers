@@ -1,39 +1,37 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { FiltersContext } from '../Context/FiltersContext.tsx';
 
 type DropDownProps = {
-  displays: string[];
-  showDropDown: boolean;
-  toggleDropDown: Function;
   displaySelection: Function;
 };
 
 const DropDown: React.FC<DropDownProps> = ({
-  displays,
   displaySelection,
 }: DropDownProps): JSX.Element => {
-  const [showDropDown, setShowDropDown] = useState<boolean>(false);
+  const filtersContext = useContext(FiltersContext);
 
   /**
    * Handle passing the city name
    * back to the parent component
    *
-   * @param city  The selected city
+   * @param display  The selected display
    */
-  const onClickHandler = (city: string): void => {
-    displaySelection(city);
+  const onClickHandler = (display: string): void => {
+    displaySelection(display);
   };
 
   useEffect(() => {
-    setShowDropDown(showDropDown);
-  }, [showDropDown]);
+    filtersContext?.setShowDropDown(filtersContext.showDropDown);
+  }, [filtersContext?.showDropDown]);
 
   return (
     <>
-      <div className={showDropDown ? 'dropdown' : 'dropdown active'}>
-        {displays.map(
+      <div className={filtersContext?.showDropDown ? 'dropdown' : 'dropdown active'}>
+        {filtersContext?.displays.map(
           (display: string, index: number): JSX.Element => {
             return (
               <p
+                className='align-left'
                 key={index}
                 onClick={(): void => {
                   onClickHandler(display);
