@@ -12,12 +12,16 @@
   "author": "Louis Strauss",
   "license": "ISC",
   "dependencies": {
+    "@fullstackio/postgraphile-upsert-plugin": "^1.4.0",
     "@graphile-contrib/pg-many-to-many": "^1.0.2",
     "@koa/cors": "^4.0.0",
     "koa": "^2.14.2",
     "koa-bodyparser": "^4.4.0",
     "pg": "^8.11.0",
-    "postgraphile": "^4.13.0"
+    "postgraphile": "^4.13.0",
+    "postgraphile-core": "^4.13.0",
+    "postgraphile-plugin-nested-mutations": "^1.1.0",
+    "postgraphile-upsert-plugin": "^3.2.2"
   },
   "devDependencies": {
     "dotenv": "^16.1.4",

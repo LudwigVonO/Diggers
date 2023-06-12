@@ -39,7 +39,7 @@ insert into diggers_app.recommendation (id, media_id, recommender_id,rating, rev
   (3, 1, 3, 5,'What happens to the dog from the first fight?', '2015-07-03T14:11:30Z'),
   (4, 4, 4, 5,'Some fantastic dresses and dances.', '2015-07-03T14:11:30Z');
   
-alter sequence diggers_app.film_id_seq restart with 5;
+alter sequence diggers_app.recommendation_id_seq restart with 5;
 
 
 insert into diggers_app.ref_recommendations_w_moods (id,recommendation_id,mood_id) values
@@ -51,6 +51,6 @@ insert into diggers_app.ref_recommendations_w_moods (id,recommendation_id,mood_i
   (6,3,1),
   (7,3,2),
   (8,4,1);
-
+alter sequence diggers_app.ref_recommendations_w_moods_id_seq restart with 9;
 
 commit;

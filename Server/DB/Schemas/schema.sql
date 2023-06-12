@@ -84,4 +84,12 @@ returns setof diggers_app.mood as $$
   where recommendation.id = r.id;
 $$ language sql stable;
 
+-- Enables search by tmbdId 
+create function diggers_app.search_films(search integer) 
+returns setof diggers_app.film as $$
+  select film.*
+  from diggers_app.film as film
+  where film.tmdb_id = search
+$$ language sql stable;
+
 commit;
